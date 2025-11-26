@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meu Projeto – Tito</title>
+  <style>
+    :root {
+      --bg-body: #020617;
+      --bg-card: #0b1220;
+      --accent: #ef4444;
+      --accent-soft: rgba(239, 68, 68, 0.15);
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --border-subtle: #1f2937;
+      --radius-lg: 18px;
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.55);
+      --font-main: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-main);
+      background: radial-gradient(circle at top, #020617 0, #000 55%);
+      color: var(--text-main);
+      min-height: 100vh;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    .page {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 20px 16px 64px;
+    }
+
+    /* NAV */
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      backdrop-filter: blur(14px);
+      box-shadow: var(--shadow-soft);
+      position: sticky;
+      top: 12px;
+      z-index: 10;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 0, #fecaca, #ef4444 50%, #7f1d1d 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 18px;
+      color: #fff;
+      box-shadow: 0 0 22px rgba(248, 113, 113, 0.7);
+    }
+
+    .nav-title {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .nav-title-main {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .nav-title-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .nav-link {
+      padding: 6px 10px;
+      border-radius: 999px;
+      transition: 0.18s ease;
+    }
+
+    .nav-link:hover {
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text-main);
+    }
+
+    .nav-link-primary {
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #ef4444, #b91c1c);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: 0 15px 32px rgba(239, 68, 68, 0.7);
+    }
+
+    .nav-link-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 20px 42px rgba(239, 68, 68, 0.9);
+    }
+
+    @media (max-width: 720px) {
+      .nav-links { display: none; }
+    }
+
+    /* HERO */
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.4fr);
+      gap: 32px;
+      margin-top: 28px;
+      align-items: center;
+    }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: minmax(0, 1fr); }
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      background: radial-gradient(circle at top left, rgba(248, 113, 113, 0.22), transparent 60%);
+      color: var(--text-muted);
+      max-width: fit-content;
+    }
+
+    .hero-pill-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 8px rgba(34, 197, 94, 0.9);
+    }
+
+    .hero-title {
+      font-size: clamp(30px, 4vw, 40px);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      font-weight: 700;
+    }
+
+    .hero-title span {
+      background: linear-gradient(135deg, #fca5a5, #ef4444, #f97316);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-sub {
+      font-size: 14px;
+      color: var(--text-muted);
+      max-width: 480px;
+    }
+
+    .hero-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 8px;
+    }
+
+    .metric {
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(31, 41, 55, 0.95);
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.85));
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.7);
+    }
+
+    .metric-label {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .metric-value {
+      font-size: 18px;
+      font-weight: 600;
+      margin-top: 3px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .btn {
+      border-radius: 999px;
+      padding: 10px 18px;
+      font-size: 13px;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: 0.18s ease;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #ef4444, #b91c1c);
+      color: #fff;
+      box-shadow: 0 15px 35px rgba(239, 68, 68, 0.7);
+      font-weight: 600;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 20px 45px rgba(239, 68, 68, 0.9);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      color: var(--text-main);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(15, 23, 42, 0.92);
+    }
+
+    .btn-icon {
+      font-size: 16px;
+      line-height: 1;
+    }
+
+    /* HERO RIGHT CARD */
+
+    .hero-card {
+      border-radius: 24px;
+      background: radial-gradient(circle at top left, rgba(248, 113, 113, 0.18), transparent 60%),
+                  radial-gradient(circle at bottom right, rgba(56, 189, 248, 0.18), transparent 60%),
+                  #020617;
+      padding: 18px;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .hero-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .hero-card-title-group {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .hero-card-title {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .hero-card-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .hero-card-pill {
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      color: var(--text-muted);
+    }
+
+    .hero-card-main {
+      border-radius: 18px;
+      background: rgba(15, 23, 42, 0.98);
+      border: 1px solid rgba(31, 41, 55, 0.9);
+      padding: 14px;
+      display: grid;
+      grid-template-columns: 1.7fr 1.2fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 900px) {
+      .hero-card-main { grid-template-columns: 1fr; }
+    }
+
+    .hero-chart {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .hero-chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .hero-chart-title {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .hero-chart-number {
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    .hero-chart-bars {
+      display: flex;
+      gap: 6px;
+      align-items: flex-end;
+      height: 90px;
+      margin-top: 6px;
+    }
+
+    .hero-bar {
+      flex: 1;
+      border-radius: 999px;
+      background: linear-gradient(to top, rgba(239, 68, 68, 0.22), rgba(248, 250, 252, 0.98));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bar::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(to top, rgba(239, 68, 68, 0.9), rgba(248, 250, 252, 0.1));
+      transform-origin: bottom;
+    }
+
+    .hero-bar:nth-child(1) { height: 45%; }
+    .hero-bar:nth-child(2) { height: 80%; }
+    .hero-bar:nth-child(3) { height: 60%; }
+    .hero-bar:nth-child(4) { height: 100%; }
+
+    .hero-chart-footer {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    .hero-side {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .hero-side-card {
+      padding: 10px 11px;
+      border-radius: 14px;
+      border: 1px solid var(--border-subtle);
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.9));
+    }
+
+    .hero-side-label {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .hero-side-value {
+      font-size: 15px;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    .hero-side-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      margin-top: 6px;
+      padding: 4px 7px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: #fecaca;
+    }
+
+    .tag-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    .hero-card-footer {
+      margin-top: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .hero-avatar-group {
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-avatar {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      border: 1px solid #020617;
+      background: linear-gradient(135deg, #ef4444, #f97316);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 600;
+      margin-left: -7px;
+      color: #fff;
+    }
+
+    .hero-avatar:first-child { margin-left: 0; }
+
+    /* SECTION GENÉRICA */
+
+    .section {
+      margin-top: 40px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 16px;
+      gap: 10px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .section-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    @media (max-width: 900px) {
+      .feature-grid { grid-template-columns: minmax(0, 1fr); }
+    }
+
+    .feature-card {
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(31, 41, 55, 0.95);
+      background: rgba(15, 23, 42, 0.97);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.65);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .feature-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      background: radial-gradient(circle at top left, #fecaca, #ef4444);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      box-shadow: 0 0 20px rgba(239, 68, 68, 0.7);
+    }
+
+    .feature-title {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .feature-text {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .feature-tag {
+      margin-top: 4px;
+      font-size: 11px;
+      color: #fecaca;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      align-self: flex-start;
+    }
+
+    /* CTA */
+
+    .cta {
+      margin-top: 40px;
+      padding: 18px 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      background: radial-gradient(circle at top left, rgba(248, 113, 113, 0.18), transparent 55%),
+                  rgba(15, 23, 42, 0.96);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .cta-text-main {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .cta-text-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .cta-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    /* FOOTER */
+
+    footer {
+      margin-top: 32px;
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      border-top: 1px solid rgba(31, 41, 55, 0.9);
+      padding-top: 14px;
+    }
+
+    footer a {
+      color: var(--text-muted);
+      font-size: 11px;
+    }
+
+    footer a:hover {
+      color: var(--text-main);
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <!-- NAV -->
+    <header class="nav">
+      <div class="nav-left">
+        <div class="nav-logo">T</div>
+        <div class="nav-title">
+          <div class="nav-title-main">Tito – Projetos & BI</div>
+          <div class="nav-title-sub">Automação, dados e logística</div>
+        </div>
+      </div>
+
+      <nav class="nav-links">
+        <a href="#sobre" class="nav-link">Sobre</a>
+        <a href="#projetos" class="nav-link">Projetos</a>
+        <a href="#contato" class="nav-link">Contato</a>
+        <a href="#cta" class="nav-link-primary">Ver mais</a>
+      </nav>
+    </header>
+
+    <!-- HERO -->
+    <main class="hero">
+      <section class="hero-left">
+        <div class="hero-pill">
+          <span class="hero-pill-dot"></span>
+          <span>Projetos em BI, Excel e automação</span>
+        </div>
+
+        <h1 class="hero-title">
+          Transformando <span>dado, planilha e rota</span> em decisão rápida e resultado real.
+        </h1>
+
+        <p class="hero-sub">
+          Site base para apresentar seus dashboards, scripts em SAP/Excel e soluções de logística.
+          Todos os números aqui são fictícios, apenas para ilustração visual.
+        </p>
+
+        <div class="hero-metrics">
+          <div class="metric">
+            <div class="metric-label">Dashboards criados</div>
+            <div class="metric-value">+10</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Processos automatizados</div>
+            <div class="metric-value">+25</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Horas poupadas/mês</div>
+            <div class="metric-value">+80h</div>
+          </div>
+        </div>
+
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="document.getElementById('projetos').scrollIntoView({behavior:'smooth'})">
+            <span>Ver exemplos de projetos</span>
+            <span class="btn-icon">↗</span>
+          </button>
+          <button class="btn btn-ghost" onclick="document.getElementById('contato').scrollIntoView({behavior:'smooth'})">
+            <span>Entrar em contato</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- HERO RIGHT CARD -->
+      <aside class="hero-card" aria-label="Painel ilustrativo">
+        <div class="hero-card-header">
+          <div class="hero-card-title-group">
+            <div class="hero-card-title">Painel de Operação Logística</div>
+            <div class="hero-card-sub">Exemplo visual de dashboard</div>
+          </div>
+          <div class="hero-card-pill">DEMO</div>
+        </div>
+
+        <div class="hero-card-main">
+          <div class="hero-chart">
+            <div class="hero-chart-header">
+              <div class="hero-chart-title">Entregas no prazo</div>
+              <div class="hero-chart-number">94%</div>
+            </div>
+            <div class="hero-chart-bars">
+              <div class="hero-bar"></div>
+              <div class="hero-bar"></div>
+              <div class="hero-bar"></div>
+              <div class="hero-bar"></div>
+            </div>
+            <div class="hero-chart-footer">
+              <span>Semana</span><span>Mês</span><span>Tri</span><span>Ano</span>
+            </div>
+          </div>
+
+          <div class="hero-side">
+            <div class="hero-side-card">
+              <div class="hero-side-label">Rotas monitoradas</div>
+              <div class="hero-side-value">+120 / dia</div>
+              <div class="hero-side-tag">
+                <span class="tag-dot"></span>
+                Dados fictícios para exemplo
+              </div>
+            </div>
+            <div class="hero-side-card">
+              <div class="hero-side-label">Ocorrências tratadas via BI</div>
+              <div class="hero-side-value">87%</div>
+              <div class="hero-side-tag">
+                <span class="tag-dot"></span>
+                Integração BI + operação
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-card-footer">
+          <div>Layout ilustrativo – substitua pelos seus dashboards reais.</div>
+          <div class="hero-avatar-group">
+            <div class="hero-avatar">T</div>
+            <div class="hero-avatar">BI</div>
+            <div class="hero-avatar">LOG</div>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <!-- SOBRE -->
+    <section id="sobre" class="section">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Sobre o projeto</h2>
+          <p class="section-sub">
+            Uma landing page simples, moderna e focada em dados, pronta para personalizar.
+          </p>
+        </div>
+      </div>
+      <p class="section-sub">
+        Esta página foi pensada para quem usa Excel avançado, Power BI e automações em ERP/SAP
+        e quer ter um lugar único para mostrar o que faz. Você pode trocar textos, números
+        e seções conforme sua realidade — tudo em um único arquivo HTML.
+      </p>
+    </section>
+
+    <!-- PROJETOS / RECURSOS -->
+    <section id="projetos" class="section">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Exemplos de projetos</h2>
+          <p class="section-sub">
+            Use estas caixas para explicar seus painéis, scripts e melhorias de processo.
+          </p>
+        </div>
+      </div>
+
+      <div class="feature-grid">
+        <article class="feature-card">
+          <div class="feature-icon">📊</div>
+          <h3 class="feature-title">Dashboard de Transportes</h3>
+          <p class="feature-text">
+            Consolidado de entregas, OTD, KM rodado, carga transportada e desempenho por transportadora/motorista.
+          </p>
+          <span class="feature-tag">Power BI</span>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-icon">⚙️</div>
+          <h3 class="feature-title">Automação SAP + Excel</h3>
+          <p class="feature-text">
+            Macros e scripts para atualizar previsões, baixar notas, gerar espelhos e reduzir retrabalho operacional.
+          </p>
+          <span class="feature-tag">VBA / Scripting</span>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-icon">🚚</div>
+          <h3 class="feature-title">Mapa de Entregas</h3>
+          <p class="feature-text">
+            Visão geográfica da operação, facilitando análise por região, rota, motorista e prazo de entrega.
+          </p>
+          <span class="feature-tag">Mapa & KPIs</span>
+        </article>
+      </div>
+    </section>
+
+    <!-- CTA / CONTATO -->
+    <section id="cta" class="section">
+      <div class="cta">
+        <div>
+          <div class="cta-text-main">Quer adaptar este modelo?</div>
+          <div class="cta-text-sub">
+            Edite o arquivo <code>index.html</code> com seus textos, números e imagens.
+            Depois, publique em qualquer hospedagem estática para gerar um link público.
+          </div>
+        </div>
+        <div class="cta-buttons" id="contato">
+          <button class="btn btn-primary">
+            Começar a editar
+          </button>
+          <button class="btn btn-ghost">
+            Exportar código do Lovable e substituir
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <span>© <span id="year"></span> – Página pessoal de projetos e BI.</span>
+      <span>Todos os dados exibidos são fictícios, apenas para demonstração visual.</span>
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
